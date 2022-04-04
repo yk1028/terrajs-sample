@@ -10,7 +10,7 @@ const terra = new LCDClient({
 
 
 // Type aliases:
-//  Amino, Data, Proto -> account를 나타내는 다양한 표현
+//  Amino, Proto -> cosmos sdk 에서 사용하는 transaction format
 // Functions:
 //  fromAmino, fromData, fromProto
 const account = async () => {
