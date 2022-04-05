@@ -15,7 +15,7 @@ const terra = new LCDClient({
 //  fromAmino, fromData, fromProto
 const account = async () => {
     const mnemonicKey = new MnemonicKey({
-		mnemonic: secret.mnemonic
+		mnemonic: secret.mnemonic1
 	})
 
     const wallet = terra.wallet(mnemonicKey);
