@@ -10,10 +10,18 @@ const accountInfo = async () => {
     });
 
     const mnemonicKey = new MnemonicKey({
-        mnemonic: secret.mnemonic1
+        mnemonic: secret.mnemonic2
     })
 
+    console.log(mnemonicKey.privateKey);
+
+    console.log(mnemonicKey.privateKey.toString('hex'));
+
+    console.log(mnemonicKey.publicKey);
+
     const wallet = terra.wallet(mnemonicKey);
+
+    console.log(await terra.auth.accountInfo(wallet.key.accAddress))
 
     console.log(await wallet.accountNumber());
     console.log(await wallet.accountNumberAndSequence());
@@ -25,6 +33,7 @@ const accountInfo = async () => {
     // IBC
     const terraAddress = wallet.key.accAddress;
     const decodedAddress = bech32.decode(terraAddress);
+    console.log(decodedAddress)
     const osmosisAddress = bech32.encode('osmo', decodedAddress.words);
 
     console.log(osmosisAddress);
