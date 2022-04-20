@@ -9,6 +9,8 @@ import {
     SignatureV2
 } from '@terra-money/terra.js';
 
+import * as secret from '../../.secret.json';
+
 const terra = new LCDClient({
     chainID: 'bombay-12',
     URL: 'https://bombay-lcd.terra.dev',
@@ -18,18 +20,15 @@ const terra = new LCDClient({
 const multisig = async () => {
     // create a key out of a mnemonic
     const mk1 = new MnemonicKey({
-        mnemonic:
-            'notice oak worry limit wrap speak medal online prefer cluster roof addict wrist behave treat actual wasp year salad speed social layer crew genius',
+        mnemonic: secret.mnemonic1
     });
 
     const mk2 = new MnemonicKey({
-        mnemonic:
-            'arrest word woman erupt kiss tank neck achieve diagram gadget siren rare valve replace outside angry dance possible purchase extra yellow cruise pride august',
+        mnemonic: secret.mnemonic2
     });
 
     const mk3 = new MnemonicKey({
-        mnemonic:
-            'shrug resist find inch narrow tumble knee fringe wide mandate angry sense grab rack fork snack family until bread lake bridge heavy goat want',
+        mnemonic: secret.mnemonic3
     });
 
     const multisigPubkey = new LegacyAminoMultisigPublicKey(2, [
@@ -45,8 +44,8 @@ const multisig = async () => {
     // create a simple message that moves coin balances
     const send = new MsgSend(
         address,
-        'terra1x46rqay4d3cssq8gxxvqz8xt6nwlz4td20k38v',
-        { uusd: 100000 }
+        'terra1756rgnf42t73zjzdreg9xshvq7csq3pvsfkyl3',
+        { uusd: 100 }
     );
 
     const accInfo = await terra.auth.accountInfo(address);
@@ -60,13 +59,11 @@ const multisig = async () => {
         ],
         {
             msgs: [send],
-            memo: 'memo',
-            gasPrices: { uusd: 0.456 },
-            gasAdjustment: 1.2,
+            memo: 'memo'
         }
     );
 
-    const sig1 = await mk3.createSignatureAmino(
+    const sig1 = await mk1.createSignatureAmino(
         new SignDoc(
             terra.config.chainID,
             accInfo.getAccountNumber(),
